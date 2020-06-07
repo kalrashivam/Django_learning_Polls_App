@@ -1,0 +1,14 @@
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>
+        {{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}
+    </li>
+    {% if choice.is_answer %}
+        <h3>Correct Answer</h3>
+    {% endif %}
+{% endfor %}
+</ul>
+
+

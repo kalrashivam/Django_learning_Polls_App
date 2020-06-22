@@ -39,9 +39,10 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
-class Vote(generic.DetailView):
+class Vote(generic.View):
 
     def post(self, request, *args, **kwargs):
+        question = models.Question.objects.get(id=kwargs.pop('pk'))
         try:
             selected_choice = question.choice_set\
                 .get(pk=request.POST['choice'])
@@ -51,8 +52,7 @@ class Vote(generic.DetailView):
                 'error_message': "You didn't select a choice.",
             }
             # Redisplay the question voting form.
-            return HttpResponseRedirect(
-                reverse('polls:results', args=(question.id,)))
+            return render(request, 'polls/detail.html', context)
         else:
             selected_choice.votes = F('votes') + 1
             selected_choice.save(update_fields=['votes'])

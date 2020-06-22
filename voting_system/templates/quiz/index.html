@@ -1,0 +1,13 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+{% if quizes %}
+    <ul>
+    {% for quiz in quizes %}
+        <li><a href="">{{ quiz.rounds }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No quiz are available.</p>
+{% endif %}
